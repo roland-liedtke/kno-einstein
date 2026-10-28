@@ -167,7 +167,25 @@ $$
 
 ## 3. Kod źródłowy w Pythonie (Solver)
 
-Solver korzysta z biblioteki [`python-constraint2`](https://pypi.org/project/python-constraint2/), utrzymywanej kontynuacji `python-constraint` o tym samym API (`from constraint import ...`). Struktura kodu odpowiada modelowi z sekcji 2:
+Solver korzysta z biblioteki [`python-constraint2`](https://pypi.org/project/python-constraint2/), utrzymywanej kontynuacji `python-constraint` o tym samym API (`from constraint import ...`).
+
+### 3.1. `python-constraint` a `python-constraint2`
+
+Na PyPI istnieją dwa pakiety o tej samej nazwie modułu (`constraint`), więc nie należy ich instalować jednocześnie:
+
+| | [`python-constraint`](https://pypi.org/project/python-constraint/) | [`python-constraint2`](https://pypi.org/project/python-constraint2/) |
+|---|---|---|
+| Status | **nierozwijany** — ostatnie wydanie 1.4.0 z 5.11.2018 | **rozwijany przez społeczność** — wydania 2.x od 2025 r., ostatnie 2.9.0 z 27.10.2026 |
+| Autor / opiekun | Gustavo Niemeyer (autor oryginału) | Floris-Jan Willemsen i kontrybutorzy organizacji [`python-constraint`](https://github.com/python-constraint/python-constraint) na GitHubie |
+| Python | wersje z epoki Pythona 2/3.x, bez wsparcia nowych wydań | Python ≥ 3.11 (do 3.15) |
+| Implementacja | czysty Python | kod kompilowany Cythonem do C — wyraźnie szybszy |
+| API | `Problem`, `addVariable(s)`, `addConstraint`, `getSolution(s)`, podstawowe więzy (`AllDifferent`, `ExactSum`, `InSet` …) | to samo API (kompatybilne wstecz) **plus** nowe więzy (np. `ExactProdConstraint`, `MaxProdConstraint`, `Variable*SumConstraint`), więzy zapisywane jako napisy (`"a + b == 5"`), solvery `OptimizedBacktrackingSolver` (domyślny) i `ParallelSolver` |
+
+Dla naszego modelu oba pakiety dałyby ten sam wynik — używamy wyłącznie `Problem`, `AllDifferentConstraint` i więzów-funkcji. Wybraliśmy `python-constraint2`, bo jest aktywnie utrzymywany, działa z Pythonem 3.13 i jest szybszy.
+
+### 3.2. Struktura kodu
+
+Struktura kodu odpowiada modelowi z sekcji 2:
 
 | Model (sekcja 2) | Kod |
 |---|---|

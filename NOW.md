@@ -7,6 +7,7 @@
 - 2026-10-28: `einstein_solution_presentation.md` — sekcje 1–5 (teoria, model logiczny, kod, macierz wyników, scenariusz Teams).
 - 2026-10-28: W systemie jest już `pip` 25.1.1 — instrukcje instalacji przestawione z `get-pip.py` na `pip --python .venv/bin/python` (`ensurepip` nadal brak).
 - 2026-10-28: Doinstalowano `python3-venv` — `python3 -m venv` tworzy venv z pipem; instrukcje wrócone do standardowego `python3 -m venv .venv` + `.venv/bin/pip install`.
+- 2026-10-28: Opracowanie, sekcja 3.1 — porównanie `python-constraint` (nierozwijany, ostatnio 1.4.0 z 2018) i `python-constraint2` (rozwijany przez społeczność, 2.9.0).
 
 ## W toku
 - (brak)
