@@ -6,6 +6,7 @@
 - 2026-10-28: Repozytorium wypchnięte na Giteę (`ai-agent/kno-einstein`).
 - 2026-10-28: `einstein_solution_presentation.md` — sekcje 1–5 (teoria, model logiczny, kod, macierz wyników, scenariusz Teams).
 - 2026-10-28: W systemie jest już `pip` 25.1.1 — instrukcje instalacji przestawione z `get-pip.py` na `pip --python .venv/bin/python` (`ensurepip` nadal brak).
+- 2026-10-28: Doinstalowano `python3-venv` — `python3 -m venv` tworzy venv z pipem; instrukcje wrócone do standardowego `python3 -m venv .venv` + `.venv/bin/pip install`.
 
 ## W toku
 - (brak)

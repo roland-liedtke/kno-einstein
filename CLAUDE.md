@@ -7,8 +7,7 @@ na prezentację w Teams.
 
 ## Stack
 - Python 3.13, biblioteka `python-constraint2` (API `from constraint import ...`).
-- Systemowy `pip` (python3-pip) jest dostępny, ale `ensurepip` nie (brak `python3-venv`), więc venv
-  powstaje bez pipa — pakiety instaluje się do niego systemowym pipem przez `--python`.
+- Zależności instaluj tylko w `.venv` (w systemie są `python3-pip` i `python3-venv`, venv ma własny pip).
 
 ## Struktura
 - `einstein_solver.py` — model CSP (zmienne = atrybuty, dziedzina = numery domów 1–5),
@@ -19,8 +18,8 @@ na prezentację w Teams.
 
 ## Komendy
 ```bash
-python3 -m venv --without-pip .venv
-pip --python .venv/bin/python install -r requirements.txt
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
 .venv/bin/python einstein_solver.py
 ```
 
