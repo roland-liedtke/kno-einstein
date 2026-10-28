@@ -182,6 +182,7 @@ Solver korzysta z biblioteki [`python-constraint2`](https://pypi.org/project/pyt
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt     # python-constraint2==2.9.0
+# gdy venv nie ma własnego pipa: pip --python .venv/bin/python install -r requirements.txt
 .venv/bin/python einstein_solver.py
 ```
 
