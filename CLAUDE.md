@@ -27,4 +27,16 @@ python3 -m venv .venv
 - Identyfikatory i komentarze po polsku (bez zmiany stylu w istniejącym kodzie).
 - Po każdej zmianie `einstein_solver.py` zaktualizuj sekcje 3 i 4 w
   `einstein_solution_presentation.md` (kod 1:1 i wynik z faktycznego uruchomienia).
-- Każdą zmianę commituj i pushuj na Giteę (`origin` = `gitea@192.168.11.52:ai-agent/kno-einstein.git`).
+
+## Git
+- Remote: `gitea@192.168.11.52:ai-agent/kno-einstein.git` (właściciel `ai-agent`).
+- Gałąź główna: `main` — nie commituj do niej bezpośrednio.
+- **Zasady gałęzi i PR-ów są w `CONTRIBUTING.md`**: nowa gałąź od aktualnego `main`, nazwa `<typ>/<opis-bez-diakrytykow>`, jedna logiczna zmiana na PR.
+- Każdą zmianę commituj i otwieraj Pull Request do `main` przez AGit flow (bez tokenu). PR-y scala właściciel — agent ich nie scala.
+```bash
+T=$(printf '%s' "Tytuł PR" | base64 -w0)
+D=$(printf '%s\n' "Opis PR (markdown)" | base64 -w0)
+git push origin HEAD:refs/for/main -o topic=<nazwa-gałęzi> \
+  -o "title={base64}$T" -o "description={base64}$D"
+```
+- Otwarte PR-y: `curl -s "http://192.168.11.52:3000/api/v1/repos/ai-agent/kno-einstein/pulls?state=open"`.
