@@ -9,6 +9,7 @@
 - 2026-10-28: Doinstalowano `python3-venv` — `python3 -m venv` tworzy venv z pipem; instrukcje wrócone do standardowego `python3 -m venv .venv` + `.venv/bin/pip install`.
 - 2026-10-28: Opracowanie, sekcja 3.1 — porównanie `python-constraint` (nierozwijany, ostatnio 1.4.0 z 2018) i `python-constraint2` (rozwijany przez społeczność, 2.9.0).
 - 2026-10-30: Wprowadzono GitHub flow z PR-ami przez AGit: `CONTRIBUTING.md`, sekcja Git w `CLAUDE.md` (PR `docs/zasady-galezi`).
+- 2026-11-01: Repozytorium przeniesione do organizacji `konfiguracje.online` (`konfiguracje.online/kno-einstein`); zaktualizowane ścieżki w `CLAUDE.md`.
 
 ## W toku
 - (brak)
