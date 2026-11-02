@@ -189,10 +189,10 @@ Struktura kodu odpowiada modelowi z sekcji 2:
 
 | Model (sekcja 2) | Kod |
 |---|---|
-| zbiory $N, K, Nap, P, Z$ | słownik `KATEGORIE` |
-| zmienne $\text{poz}(x) \in D$ | `problem.addVariables(wartosci, DOMY)` |
+| zbiory $N, K, Nap, P, Z$ | słownik `CATEGORIES` |
+| zmienne $\text{poz}(x) \in D$ | `problem.addVariables(values, HOUSES)` |
 | $\text{AllDifferent}(S)$ | `AllDifferentConstraint()` |
-| predykaty $\text{TenSamDom}$, $\text{NaLewo}$, $\text{Obok}$ | funkcje `ten_sam_dom`, `na_lewo`, `obok` |
+| predykaty $\text{TenSamDom}$, $\text{NaLewo}$, $\text{Obok}$ | funkcje `same_house`, `left_of`, `next_to` |
 | wskazówki W1–W15 | 15 wywołań `addConstraint` z komentarzem `# Wn:` |
 
 **Uruchomienie:**
@@ -226,9 +226,9 @@ from constraint import AllDifferentConstraint, Problem
 
 # --- Uniwersum: domy i kategorie atrybutów ----------------------------------
 
-DOMY = [1, 2, 3, 4, 5]
+HOUSES = [1, 2, 3, 4, 5]
 
-KATEGORIE = {
+CATEGORIES = {
     "Narodowość": ["Norweg", "Anglik", "Duńczyk", "Niemiec", "Szwed"],
     "Kolor": ["Czerwony", "Zielony", "Biały", "Żółty", "Niebieski"],
     "Napój": ["Herbata", "Mleko", "Woda", "Piwo", "Kawa"],
@@ -239,101 +239,101 @@ KATEGORIE = {
 
 # --- Relacje przestrzenne (predykaty) ---------------------------------------
 
-def obok(a, b):
+def next_to(a, b):
     """Obok(a, b) <=> |poz(a) - poz(b)| = 1."""
     return abs(a - b) == 1
 
 
-def na_lewo(a, b):
+def left_of(a, b):
     """NaLewo(a, b) <=> poz(a) = poz(b) - 1 (a stoi bezpośrednio na lewo od b)."""
     return a == b - 1
 
 
-def ten_sam_dom(a, b):
+def same_house(a, b):
     """TenSamDom(a, b) <=> poz(a) = poz(b)."""
     return a == b
 
 
-def zbuduj_problem():
+def build_problem():
     """Tworzy model CSP: zmienne, dziedziny i wszystkie więzy."""
     problem = Problem()
 
     # Zmienne i dziedziny: poz(X) ∈ D dla każdej wartości atrybutu X.
-    for wartosci in KATEGORIE.values():
-        problem.addVariables(wartosci, DOMY)
+    for values in CATEGORIES.values():
+        problem.addVariables(values, HOUSES)
         # Więz strukturalny: w kategorii każda wartość w innym domu.
-        problem.addConstraint(AllDifferentConstraint(), wartosci)
+        problem.addConstraint(AllDifferentConstraint(), values)
 
     # 15 wskazówek z treści zagadki.
     # W1: Norweg mieszka w pierwszym domu.
-    problem.addConstraint(lambda n: n == 1, ["Norweg"])
+    problem.addConstraint(lambda pos: pos == 1, ["Norweg"])
     # W2: Anglik mieszka w czerwonym domu.
-    problem.addConstraint(ten_sam_dom, ["Anglik", "Czerwony"])
+    problem.addConstraint(same_house, ["Anglik", "Czerwony"])
     # W3: Zielony dom stoi bezpośrednio po lewej stronie białego.
-    problem.addConstraint(na_lewo, ["Zielony", "Biały"])
+    problem.addConstraint(left_of, ["Zielony", "Biały"])
     # W4: Duńczyk pija herbatę.
-    problem.addConstraint(ten_sam_dom, ["Duńczyk", "Herbata"])
+    problem.addConstraint(same_house, ["Duńczyk", "Herbata"])
     # W5: Palacz Rothmansów mieszka obok hodowcy kotów.
-    problem.addConstraint(obok, ["Rothmans", "Koty"])
+    problem.addConstraint(next_to, ["Rothmans", "Koty"])
     # W6: Mieszkaniec żółtego domu pali Dunhille.
-    problem.addConstraint(ten_sam_dom, ["Żółty", "Dunhill"])
+    problem.addConstraint(same_house, ["Żółty", "Dunhill"])
     # W7: Niemiec pali Marlboro.
-    problem.addConstraint(ten_sam_dom, ["Niemiec", "Marlboro"])
+    problem.addConstraint(same_house, ["Niemiec", "Marlboro"])
     # W8: Mieszkaniec środkowego domu pija mleko.
-    problem.addConstraint(lambda m: m == 3, ["Mleko"])
+    problem.addConstraint(lambda pos: pos == 3, ["Mleko"])
     # W9: Palacz Rothmansów ma sąsiada, który pija wodę.
-    problem.addConstraint(obok, ["Rothmans", "Woda"])
+    problem.addConstraint(next_to, ["Rothmans", "Woda"])
     # W10: Palacz Pall Malli hoduje ptaki.
-    problem.addConstraint(ten_sam_dom, ["Pall Mall", "Ptaki"])
+    problem.addConstraint(same_house, ["Pall Mall", "Ptaki"])
     # W11: Szwed hoduje psy.
-    problem.addConstraint(ten_sam_dom, ["Szwed", "Psy"])
+    problem.addConstraint(same_house, ["Szwed", "Psy"])
     # W12: Norweg mieszka obok niebieskiego domu.
-    problem.addConstraint(obok, ["Norweg", "Niebieski"])
+    problem.addConstraint(next_to, ["Norweg", "Niebieski"])
     # W13: Hodowca koni mieszka obok żółtego domu.
-    problem.addConstraint(obok, ["Konie", "Żółty"])
+    problem.addConstraint(next_to, ["Konie", "Żółty"])
     # W14: Palacz Philip Morrisów pija piwo.
-    problem.addConstraint(ten_sam_dom, ["Philip Morris", "Piwo"])
+    problem.addConstraint(same_house, ["Philip Morris", "Piwo"])
     # W15: W zielonym domu pija się kawę.
-    problem.addConstraint(ten_sam_dom, ["Zielony", "Kawa"])
+    problem.addConstraint(same_house, ["Zielony", "Kawa"])
 
     return problem
 
 
-def odwroc(rozwiazanie):
+def invert(solution):
     """Zamienia przypisanie {atrybut: dom} na macierz {dom: {kategoria: atrybut}}."""
-    macierz = {dom: {} for dom in DOMY}
-    for kategoria, wartosci in KATEGORIE.items():
-        for wartosc in wartosci:
-            macierz[rozwiazanie[wartosc]][kategoria] = wartosc
-    return macierz
+    matrix = {house: {} for house in HOUSES}
+    for category, values in CATEGORIES.items():
+        for value in values:
+            matrix[solution[value]][category] = value
+    return matrix
 
 
-def tabela_markdown(macierz):
+def markdown_table(matrix):
     """Formatuje macierz rozwiązania jako tabelę Markdown."""
-    naglowek = ["Dom", *KATEGORIE]
-    wiersze = [
-        "| " + " | ".join(naglowek) + " |",
-        "|" + "|".join(["---"] * len(naglowek)) + "|",
+    header = ["Dom", *CATEGORIES]
+    rows = [
+        "| " + " | ".join(header) + " |",
+        "|" + "|".join(["---"] * len(header)) + "|",
     ]
-    for dom in DOMY:
-        komorki = [str(dom), *(macierz[dom][k] for k in KATEGORIE)]
-        wiersze.append("| " + " | ".join(komorki) + " |")
-    return "\n".join(wiersze)
+    for house in HOUSES:
+        cells = [str(house), *(matrix[house][cat] for cat in CATEGORIES)]
+        rows.append("| " + " | ".join(cells) + " |")
+    return "\n".join(rows)
 
 
 def main():
-    rozwiazania = zbuduj_problem().getSolutions()
-    print(f"Liczba rozwiązań: {len(rozwiazania)}")
-    if len(rozwiazania) != 1:
+    solutions = build_problem().getSolutions()
+    print(f"Liczba rozwiązań: {len(solutions)}")
+    if len(solutions) != 1:
         raise SystemExit("Zagadka nie ma jednoznacznego rozwiązania.")
 
-    macierz = odwroc(rozwiazania[0])
+    matrix = invert(solutions[0])
     print()
-    print(tabela_markdown(macierz))
+    print(markdown_table(matrix))
 
-    dom_rybek = rozwiazania[0]["Rybki"]
+    fish_house = solutions[0]["Rybki"]
     print()
-    print(f"Kto hoduje rybki? {macierz[dom_rybek]['Narodowość']} (dom nr {dom_rybek}).")
+    print(f"Kto hoduje rybki? {matrix[fish_house]['Narodowość']} (dom nr {fish_house}).")
 
 
 if __name__ == "__main__":
@@ -416,7 +416,7 @@ Solver nie potrzebuje tej „sprytnej” kolejności kroków. Wystarczą mu regu
 
 ### Blok 3 — Kod i wynik (ok. 4 min) · *na ekranie: edytor, potem terminal*
 
-- Pokaż w kodzie **odpowiedniki modelu** według tabeli z sekcji 3: `KATEGORIE` → `addVariables` → `AllDifferentConstraint` → 15 komentarzy `# W1…# W15`.
+- Pokaż w kodzie **odpowiedniki modelu** według tabeli z sekcji 3: `CATEGORIES` → `addVariables` → `AllDifferentConstraint` → 15 komentarzy `# W1…# W15`.
 - Zwróć uwagę, że każda wskazówka to **jedna linijka**, a komentarz nad nią to dosłowne zdanie z zagadki. To czytelny ślad od tekstu do formuły.
 - Uruchom na żywo: `.venv/bin/python einstein_solver.py`.
 - Omów wynik:
