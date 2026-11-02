@@ -24,7 +24,9 @@ python3 -m venv .venv
 ```
 
 ## Konwencje
-- Identyfikatory i komentarze po polsku (bez zmiany stylu w istniejącym kodzie).
+- Identyfikatory (zmienne, funkcje, stałe) po angielsku; komentarze, docstringi i teksty
+  wypisywane przez solver po polsku (opracowanie jest po polsku). Wartości atrybutów
+  (np. `"Norweg"`, `"Rybki"`) to dane zagadki — zostają po polsku.
 - Po każdej zmianie `einstein_solver.py` zaktualizuj sekcje 3 i 4 w
   `einstein_solution_presentation.md` (kod 1:1 i wynik z faktycznego uruchomienia).
 
