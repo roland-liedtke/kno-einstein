@@ -193,6 +193,7 @@ Struktura kodu odpowiada modelowi z sekcji 2:
 | zmienne $\text{poz}(x) \in D$ | `problem.addVariables(values, HOUSES)` |
 | $\text{AllDifferent}(S)$ | `AllDifferentConstraint()` |
 | predykaty $\text{TenSamDom}$, $\text{NaLewo}$, $\text{Obok}$ | funkcje `same_house`, `left_of`, `next_to` |
+| stałe pozycje: $\text{poz}(x)=1$ (W1), $\text{poz}(x)=3$ (W8) | funkcje `in_first_house`, `in_middle_house` |
 | wskazówki W1–W15 | 15 wywołań `addConstraint` z komentarzem `# Wn:` |
 
 **Uruchomienie:**
@@ -254,6 +255,16 @@ def same_house(a, b):
     return a == b
 
 
+def in_first_house(a):
+    """poz(a) = 1 (a mieszka w pierwszym domu)."""
+    return a == 1
+
+
+def in_middle_house(a):
+    """poz(a) = 3 (a mieszka w środkowym domu)."""
+    return a == 3
+
+
 def build_problem():
     """Tworzy model CSP: zmienne, dziedziny i wszystkie więzy."""
     problem = Problem()
@@ -266,7 +277,7 @@ def build_problem():
 
     # 15 wskazówek z treści zagadki.
     # W1: Norweg mieszka w pierwszym domu.
-    problem.addConstraint(lambda pos: pos == 1, ["Norweg"])
+    problem.addConstraint(in_first_house, ["Norweg"])
     # W2: Anglik mieszka w czerwonym domu.
     problem.addConstraint(same_house, ["Anglik", "Czerwony"])
     # W3: Zielony dom stoi bezpośrednio po lewej stronie białego.
@@ -280,7 +291,7 @@ def build_problem():
     # W7: Niemiec pali Marlboro.
     problem.addConstraint(same_house, ["Niemiec", "Marlboro"])
     # W8: Mieszkaniec środkowego domu pija mleko.
-    problem.addConstraint(lambda pos: pos == 3, ["Mleko"])
+    problem.addConstraint(in_middle_house, ["Mleko"])
     # W9: Palacz Rothmansów ma sąsiada, który pija wodę.
     problem.addConstraint(next_to, ["Rothmans", "Woda"])
     # W10: Palacz Pall Malli hoduje ptaki.
