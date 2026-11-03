@@ -11,6 +11,7 @@
 - 2026-10-30: Wprowadzono GitHub flow z PR-ami przez AGit: `CONTRIBUTING.md`, sekcja Git w `CLAUDE.md` (PR `docs/zasady-galezi`).
 - 2026-11-01: Repozytorium przeniesione do organizacji `konfiguracje.online` (`konfiguracje.online/kno-einstein`); zaktualizowane ścieżki w `CLAUDE.md`.
 - 2026-11-02: Identyfikatory w `einstein_solver.py` przemianowane na angielskie (np. `ten_sam_dom` → `same_house`, `KATEGORIE` → `CATEGORIES`); wynik solvera bez zmian, sekcja 3 opracowania zaktualizowana.
+- 2026-11-03: Więzy unarne W1 i W8 jako nazwane funkcje `in_first_house` i `in_middle_house` zamiast lambd; wynik bez zmian, sekcja 3 opracowania (kod i tabela 3.2) zaktualizowana.
 
 ## W toku
 - (brak)
