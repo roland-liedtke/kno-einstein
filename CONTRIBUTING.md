@@ -8,8 +8,9 @@ zmian ani dla samej dokumentacji.
 
 1. **Nie commituj i nie pushuj bezpośrednio do `main`.**
 2. Każda zmiana powstaje na **nowej gałęzi** odgałęzionej od aktualnego `main`.
-3. Do `main` zmiana trafia wyłącznie przez **Pull Request** na Gitei, który przegląda i scala
-   właściciel repozytorium (Roland Liedtke). Agent AI nie scala PR-ów.
+3. Do `main` zmiana trafia wyłącznie przez **Pull Request** na Gitei. PR recenzuje tester
+   (`ai-tester`), a scala wyłącznie właściciel repozytorium (Roland Liedtke) — po zatwierdzeniu
+   przez testera. Agenci AI nie scalają PR-ów.
 4. Jeśli repo ma CI — PR scalamy tylko przy **zielonym CI**.
 
 `main` jest jedyną gałęzią stałą i zawsze jest w stanie gotowym do wdrożenia.
@@ -34,7 +35,8 @@ git push origin HEAD:refs/for/main -o topic=feat/krotki-opis \
   -o "title={base64}$T" -o "description={base64}$D"
 ```
 
-Kolejny push z tym samym `topic` aktualizuje istniejący PR. Można też pracować ręcznie:
+Kolejny push z tym samym `topic` dodaje commity do istniejącego PR (tytułu i opisu nie zmienia).
+Można też pracować ręcznie:
 `git push -u origin <gałąź>` i otworzyć PR w WWW Gitei.
 
 ## Nazwy gałęzi
