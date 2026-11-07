@@ -11,7 +11,8 @@ na prezentację w Teams.
 
 ## Struktura
 - `einstein_solver.py` — model CSP (zmienne = atrybuty, dziedzina = numery domów 1–5),
-  15 wskazówek jako więzy `# W1`…`# W15`, wydruk macierzy i odpowiedzi.
+  15 wskazówek jako więzy `# W1`…`# W15`, wydruk macierzy (tabela z ramką do terminala) i odpowiedzi.
+- `test_einstein_solver.py` — testy `unittest`: jednoznaczność rozwiązania, odpowiedź, układ tabeli.
 - `einstein_solution_presentation.md` — opracowanie: teoria, model logiczny, kod, wyniki,
   scenariusz Teams. Sekcje 3 i 4 zawierają kopię kodu i rzeczywistego wyniku solvera.
 - `requirements.txt` — zależności.
@@ -21,6 +22,7 @@ na prezentację w Teams.
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/python einstein_solver.py
+.venv/bin/python -m unittest -v    # testy
 ```
 
 ## Konwencje
