@@ -319,17 +319,36 @@ def invert(solution):
     return matrix
 
 
-def markdown_table(matrix):
-    """Formatuje macierz rozwiązania jako tabelę Markdown."""
+def terminal_table(matrix):
+    """Formatuje macierz rozwiązania jako tabelę z ramką do wydruku w terminalu.
+
+    Szerokość każdej kolumny = najdłuższy tekst w kolumnie (nagłówek lub
+    wartość), więc kolumny są wyrównane niezależnie od długości nazw.
+    """
     header = ["Dom", *CATEGORIES]
     rows = [
-        "| " + " | ".join(header) + " |",
-        "|" + "|".join(["---"] * len(header)) + "|",
+        [str(house), *(matrix[house][cat] for cat in CATEGORIES)]
+        for house in HOUSES
     ]
-    for house in HOUSES:
-        cells = [str(house), *(matrix[house][cat] for cat in CATEGORIES)]
-        rows.append("| " + " | ".join(cells) + " |")
-    return "\n".join(rows)
+    widths = [max(len(row[i]) for row in [header, *rows]) for i in range(len(header))]
+
+    def border(left, middle, right):
+        return left + middle.join("─" * (w + 2) for w in widths) + right
+
+    def line(cells):
+        padded = [
+            cell.center(w) if i == 0 else cell.ljust(w)
+            for i, (cell, w) in enumerate(zip(cells, widths))
+        ]
+        return "│ " + " │ ".join(padded) + " │"
+
+    return "\n".join([
+        border("┌", "┬", "┐"),
+        line(header),
+        border("├", "┼", "┤"),
+        *(line(row) for row in rows),
+        border("└", "┴", "┘"),
+    ])
 
 
 def main():
@@ -340,7 +359,7 @@ def main():
 
     matrix = invert(solutions[0])
     print()
-    print(markdown_table(matrix))
+    print(terminal_table(matrix))
 
     fish_house = solutions[0]["Rybki"]
     print()
@@ -360,13 +379,15 @@ Wynik uruchomienia `einstein_solver.py` (czas ok. 0,2 s):
 ```text
 Liczba rozwiązań: 1
 
-| Dom | Narodowość | Kolor | Napój | Papierosy | Zwierzę |
-|---|---|---|---|---|---|
-| 1 | Norweg | Żółty | Woda | Dunhill | Koty |
-| 2 | Duńczyk | Niebieski | Herbata | Rothmans | Konie |
-| 3 | Anglik | Czerwony | Mleko | Pall Mall | Ptaki |
-| 4 | Niemiec | Zielony | Kawa | Marlboro | Rybki |
-| 5 | Szwed | Biały | Piwo | Philip Morris | Psy |
+┌─────┬────────────┬───────────┬─────────┬───────────────┬─────────┐
+│ Dom │ Narodowość │ Kolor     │ Napój   │ Papierosy     │ Zwierzę │
+├─────┼────────────┼───────────┼─────────┼───────────────┼─────────┤
+│  1  │ Norweg     │ Żółty     │ Woda    │ Dunhill       │ Koty    │
+│  2  │ Duńczyk    │ Niebieski │ Herbata │ Rothmans      │ Konie   │
+│  3  │ Anglik     │ Czerwony  │ Mleko   │ Pall Mall     │ Ptaki   │
+│  4  │ Niemiec    │ Zielony   │ Kawa    │ Marlboro      │ Rybki   │
+│  5  │ Szwed      │ Biały     │ Piwo    │ Philip Morris │ Psy     │
+└─────┴────────────┴───────────┴─────────┴───────────────┴─────────┘
 
 Kto hoduje rybki? Niemiec (dom nr 4).
 ```
